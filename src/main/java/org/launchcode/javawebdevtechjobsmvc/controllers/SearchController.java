@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 import static org.launchcode.javawebdevtechjobsmvc.controllers.ListController.columnChoices;
 
-/**
- * Created by LaunchCode
- */
+
 @Controller
 @RequestMapping("search")
 public class SearchController {
+
+    private String searchType;
 
     @RequestMapping(value = "")
     public String search(Model model) {
@@ -24,5 +24,22 @@ public class SearchController {
     }
 
     // TODO #3 - Create a handler to process a search request and render the updated search view.
+@RequestMapping(value="results",method=RequestMethod.POST)
+    public String displaySearchResults(Model model, @RequestParam String searchTerm. @RequestParam String searchType){
+        ArrayList<Job> jobs;
+        model.addAttribute("columns", columnChoices);
+
+        if (searchTerm.equals("all")||searchTerm.equals("")) {
+            jobs = JobData.findAll();
+            model.addAttribute("title", "All Jobs");
+        }else{
+            jobs=JobData.findByColumnAndValue(searchType,searchTerm));
+            model.addAttribute("title", "Jobs with" + columnChoices.get(searchType) + ":" + searchTerm);
+        }
+
+        model.addAtribute("jobs",jobs);
+            return "Search";
+
+}
 
 }
