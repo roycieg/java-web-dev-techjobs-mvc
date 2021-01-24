@@ -15,7 +15,7 @@ import static org.launchcode.javawebdevtechjobsmvc.controllers.ListController.co
 @RequestMapping("search")
 public class SearchController {
 
-    private String searchType;
+
 
     @RequestMapping(value = "")
     public String search(Model model) {
@@ -25,7 +25,7 @@ public class SearchController {
 
     // TODO #3 - Create a handler to process a search request and render the updated search view.
 @RequestMapping(value="results",method=RequestMethod.POST)
-    public String displaySearchResults(Model model, @RequestParam String searchTerm. @RequestParam String searchType){
+    public String displaySearchResults(Model model, @RequestParam String searchTerm, @RequestParam String searchType){
         ArrayList<Job> jobs;
         model.addAttribute("columns", columnChoices);
 
@@ -33,12 +33,14 @@ public class SearchController {
             jobs = JobData.findAll();
             model.addAttribute("title", "All Jobs");
         }else{
-            jobs=JobData.findByColumnAndValue(searchType,searchTerm));
+            jobs=(JobData.findByColumnAndValue(searchType,searchTerm));
             model.addAttribute("title", "Jobs with" + columnChoices.get(searchType) + ":" + searchTerm);
         }
 
-        model.addAtribute("jobs",jobs);
-            return "Search";
+        model.addAttribute("jobs",jobs);
+        return "search";
+
+
 
 }
 
